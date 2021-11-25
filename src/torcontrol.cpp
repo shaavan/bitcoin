@@ -588,6 +588,17 @@ void TorController::reconnect_cb(evutil_socket_t fd, short what, void *arg)
 static struct event_base *gBase;
 static std::thread torControlThread;
 
+bool TorControlArgumentCheck(const std::string& arguments)
+{
+    CService control_service;
+
+    if (!Lookup(arguments, control_service, 9051, fNameLookup)) {
+        LogPrintf("tor: Failed to look up control center %s\n", arguments);
+        return false;
+    }
+    return true;
+}
+
 static void TorControlThread(CService onion_service_target)
 {
     SetSyscallSandboxPolicy(SyscallSandboxPolicy::TOR_CONTROL);
