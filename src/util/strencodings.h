@@ -88,6 +88,8 @@ std::string EncodeBase32(const std::string& str, bool pad = true);
 
 void SplitHostPort(std::string in, uint16_t& portOut, std::string& hostOut);
 
+bool IsValidHostPort(const std::string& in);
+
 // LocaleIndependentAtoi is provided for backwards compatibility reasons.
 //
 // New code should use ToIntegral or the ParseInt* functions

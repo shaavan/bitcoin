@@ -13,6 +13,7 @@
 #include <cstring>
 #include <limits>
 #include <optional>
+#include <regex>
 
 static const std::string CHARS_ALPHA_NUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -126,6 +127,19 @@ void SplitHostPort(std::string in, uint16_t& portOut, std::string& hostOut)
     } else {
         hostOut = in;
     }
+}
+
+bool IsValidHostPort(const std::string &in)
+{
+  std::string host; uint16_t port;
+  SplitHostPort(in, port, host);
+
+  const std::regex ip_pattern("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$");
+  if(host.empty()) {return false;}
+  if(!std::regex_match(host, ip_pattern)) {return false;}
+  if(!(port <= 65353)) {return false;}
+
+  return true;
 }
 
 std::string EncodeBase64(Span<const unsigned char> input)
