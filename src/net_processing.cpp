@@ -952,7 +952,7 @@ bool PeerManagerImpl::TipMayBeStale()
     if (count_seconds(m_last_tip_update) == 0) {
         m_last_tip_update = GetTime<std::chrono::seconds>();
     }
-    return count_seconds(m_last_tip_update) < GetTime() - consensusParams.nPowTargetSpacing * 3 && mapBlocksInFlight.empty();
+    return m_last_tip_update.load() < GetTime<std::chrono::seconds>() - std::chrono::seconds{consensusParams.nPowTargetSpacing * 3} && mapBlocksInFlight.empty();
 }
 
 bool PeerManagerImpl::CanDirectFetch()
