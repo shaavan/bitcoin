@@ -651,14 +651,14 @@ bool CNode::ReceiveMsgBytes(Span<const uint8_t> msg_bytes, bool& complete)
             bool reject_message{false};
             CNetMessage msg = m_deserializer->GetMessage(time, reject_message);
             if (reject_message) {
-                // Message deserialization failed.  Drop the message but don't disconnect the peer.
+                // Message deserialization failed. Drop the message but don't disconnect the peer.
                 // store the size of the corrupt message
                 mapRecvBytesPerMsgType.at(NET_MESSAGE_TYPE_OTHER) += msg.m_raw_message_size;
                 continue;
             }
 
-            // Store received bytes per message command
-            // to prevent a memory DOS, only allow valid commands
+            // Store received bytes per message type
+            // to prevent a memory DOS, only allow valid messages
             auto i = mapRecvBytesPerMsgType.find(msg.m_type);
             if (i == mapRecvBytesPerMsgType.end()) {
                 i = mapRecvBytesPerMsgType.find(NET_MESSAGE_TYPE_OTHER);
