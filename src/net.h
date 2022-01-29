@@ -234,7 +234,7 @@ extern Mutex g_maplocalhost_mutex;
 extern std::map<CNetAddr, LocalServiceInfo> mapLocalHost GUARDED_BY(g_maplocalhost_mutex);
 
 extern const std::string NET_MESSAGE_TYPE_OTHER;
-typedef std::map<std::string, uint64_t> mapMsgTypeSize; //command, total bytes
+typedef std::map<std::string, uint64_t> mapMsgTypeSize; //message, total bytes
 
 class CNodeStats
 {
