@@ -234,7 +234,7 @@ extern Mutex g_maplocalhost_mutex;
 extern std::map<CNetAddr, LocalServiceInfo> mapLocalHost GUARDED_BY(g_maplocalhost_mutex);
 
 extern const std::string NET_MESSAGE_TYPE_OTHER;
-typedef std::map<std::string, uint64_t> mapMsgTypeSize; //command, total bytes
+typedef std::map<std::string, uint64_t> mapMsgTypeSize; //message, total bytes
 
 class CNodeStats
 {
@@ -298,7 +298,7 @@ public:
 
 /** The TransportDeserializer takes care of holding and deserializing the
  * network receive buffer. It can deserialize the network buffer into a
- * transport protocol agnostic CNetMessage (command & payload)
+ * transport protocol agnostic CNetMessage (message type & payload)
  */
 class TransportDeserializer {
 public:
